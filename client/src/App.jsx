@@ -3,7 +3,7 @@ import { BrowserRouter , Routes ,Route,Navigate } from 'react-router-dom'
 import HomePage from './sceness/homePage/HomePage'
 import ProfilePage from './sceness/profilePage/ProfilePage'
 import LoginPage from './sceness/loginPage/LoginPage'
-import Navbar from './sceness/navbar/Navbar'
+// import Navbar from './sceness/navbar/Navbar'
 import { useSelector } from 'react-redux'
 import { createTheme } from '@mui/material/styles'
 import { themeSettings } from './theme.js'
@@ -22,7 +22,7 @@ const App = () => {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Navbar/>
+          {/* <Navbar/> */}
         <Routes>
           <Route path='/' element={<LoginPage/>} />
           <Route path='/home' element={<HomePage/>} />
