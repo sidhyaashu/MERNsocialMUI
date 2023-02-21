@@ -5,6 +5,7 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material'
+import Form from './Form'
 
 const LoginPage = () => {
   const theme = useTheme()
@@ -36,6 +37,8 @@ const LoginPage = () => {
         >
           Welcome to socialpedia ,The social media for social 
         </Typography>
+
+        <Form/>
       </Box>
     </Box>
   )

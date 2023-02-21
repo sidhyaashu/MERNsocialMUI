@@ -57,9 +57,6 @@ const Form = () => {
     const isLogin = pageType ==='login'
     const isRegister = pageType ==='register'
 
-    const login = async (values,onSubmitProps)=>{
-
-    }
     const register = async (values,onSubmitProps)=>{
         //this allows us to submit form datat with image
         const formData = new FormData()
@@ -67,12 +64,49 @@ const Form = () => {
             formData.append(value,values[value])
         }
         formData.append('picturePath',values.picture.name)
+
+        const saveUserResponse = await fetch(
+            "http://localhost:3001/auth/",
+            {
+                method:"POST",
+                body:formData,
+            }
+        )
+        const saveUser = await saveUserResponse.json()
+        onSubmitProps.resetForm()
+
+        if(saveUser){
+            setPageType('login')
+        }
+    }
+
+    const login = async (values,onSubmitProps)=>{
+            const loggedInResponse = await fetch(
+            "http://localhost:3001/auth/login",
+            {
+                method:"POST",
+                headers: {"Content-Type":"application/json"},
+                body:JSON.stringify(values),
+            }
+        )
+        const loogedIn = await loggedInResponse.json()
+        onSubmitProps.resetForm()
+        if(loogedIn){
+            dispatch(setLogin({
+                user:loogedIn.user,
+                token:loogedIn.token,
+            }))
+            navigate('/home')
+        }
     }
 
 
-    const handleFormSubmit = async(value,onSubmitProps)=>{
-        if(isLogin) await login(values,onSubmitProps)
-        if(isRegister) await register(values,onSubmitProps)
+    const handleFormSubmit =()=>{
+        // if(isLogin) await login(value,onSubmitProps)
+        // if(isRegister) await register(value,onSubmitProps)
+
+        console.log("Clicked")
+        
     }
 
   return (
@@ -179,7 +213,7 @@ const Form = () => {
                         </Box>
                         </>
                     )}
-                    //Login and register
+                    {/* //Login and register */}
                         <TextField
                         label='Email'
                         onBlur={handleBlur}
@@ -221,7 +255,7 @@ const Form = () => {
                     {/* Switch between */}
                     <Typography
                     onClick={()=>{
-                        setPageType(isLogin?"login":"register")
+                        setPageType(isLogin?"register":"login")
                         resetForm()
                     }}
                     sx={{
@@ -229,7 +263,6 @@ const Form = () => {
                         color:palette.primary.main,
                         "&:hover":{
                             cursor:"pointer",
-                            color:palette.primary.light,
                         }
                     }}
                     >
@@ -245,4 +278,4 @@ const Form = () => {
 }
 
 export default Form
-//03:23:00
+//register function not workink  3:30
