@@ -14,6 +14,6 @@ router.get("/:id",veryFyToken,getUser)
 router.get("/:id/friends",veryFyToken,getUserFriends)
 
 //UPDATE
-router.patch("/:id/friendId",veryFyToken,addRemoveFriends)
+router.patch("/:id/:friendId",veryFyToken,addRemoveFriends)
 
 export default router
