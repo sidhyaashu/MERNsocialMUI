@@ -19,7 +19,7 @@ import FlexBetween from '../../components/FlexBetween'
 const registerSchema = yup.object().shape({
     firstName:yup.string().required('required') ,
     lastName:yup.string().required('required') ,
-    email:yup.string().email('Inavlid email').required('required') ,
+    email:yup.string().email('Inavlid email format').required('required') ,
     password:yup.string().required('required') ,
     location:yup.string().required('required') ,
     occupation:yup.string().required('required') ,
@@ -27,7 +27,7 @@ const registerSchema = yup.object().shape({
 })
 
 const loginSchema = yup.object().shape({
-    email:yup.string().email('Inavlid email').required('required') ,
+    email:yup.string().email('Inavlid email format').required('required') ,
     password:yup.string().required('required') ,
 })
 
@@ -58,7 +58,7 @@ const Form = () => {
     const isRegister = pageType ==='register'
 
     const register = async (values,onSubmitProps)=>{
-        //this allows us to submit form datat with image
+        console.log("register clicked")
         const formData = new FormData()
         for(let value in values){
             formData.append(value,values[value])
@@ -66,7 +66,7 @@ const Form = () => {
         formData.append('picturePath',values.picture.name)
 
         const saveUserResponse = await fetch(
-            "http://localhost:3001/auth/",
+            "http://localhost:3001/auth/register",
             {
                 method:"POST",
                 body:formData,
@@ -81,6 +81,7 @@ const Form = () => {
     }
 
     const login = async (values,onSubmitProps)=>{
+        console.log("login clicked")
             const loggedInResponse = await fetch(
             "http://localhost:3001/auth/login",
             {
@@ -92,21 +93,21 @@ const Form = () => {
         const loogedIn = await loggedInResponse.json()
         onSubmitProps.resetForm()
         if(loogedIn){
-            dispatch(setLogin({
-                user:loogedIn.user,
-                token:loogedIn.token,
-            }))
+            dispatch(
+                setLogin({
+                    user:loogedIn.user,
+                    token:loogedIn.token,
+                })
+            )
             navigate('/home')
         }
     }
 
 
-    const handleFormSubmit =()=>{
-        // if(isLogin) await login(value,onSubmitProps)
-        // if(isRegister) await register(value,onSubmitProps)
-
-        console.log("Clicked")
-        
+    const handleFormSubmit =async(values,onSubmitProps)=>{
+        console.log("handleFormSubmit clicked")
+        if(isLogin) await login(values,onSubmitProps)
+        if(isRegister) await register(values,onSubmitProps)
     }
 
   return (
@@ -141,7 +142,7 @@ const Form = () => {
                         onBlur={handleBlur}
                         onChange={handleChange}
                         value={values.firstName}
-                        name='firstname'
+                        name='firstName'
                         error={Boolean(touched.firstName) && Boolean(errors.firstName)}
                         helperText={touched.firstName && errors.firstName}
                         sx={{gridColumn:'span 2'}}
@@ -196,6 +197,7 @@ const Form = () => {
                                     p='1rem'
                                     sx={{"&:hover":{cursor:'pointer'}}}
                                     >
+                                        <input {...getInputProps()} />
                                         {!values.picture?(
                                             <p>Add picture here</p>
                                         ):(
@@ -207,12 +209,12 @@ const Form = () => {
 
                                     </Box>
                                 )}
-
                             </Dropzone>
-
                         </Box>
                         </>
                     )}
+
+
                     {/* //Login and register */}
                         <TextField
                         label='Email'
@@ -252,6 +254,7 @@ const Form = () => {
                     >
                         {isLogin?"LOGIN":"REGISTER"}
                     </Button>
+
                     {/* Switch between */}
                     <Typography
                     onClick={()=>{

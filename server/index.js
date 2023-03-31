@@ -11,8 +11,8 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 
 
-import User from "./models/UserM.js";
-import Post from './models/PostM.js'
+// import User from "./models/UserM.js";
+// import Post from './models/PostM.js'
 // import { users,posts } from './data/index.js'
 
 

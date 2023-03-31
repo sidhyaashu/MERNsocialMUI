@@ -4,6 +4,7 @@ import User from '../models/UserM.js'
 
 //REGISTER
 export const register = async(req,res)=>{
+    console.log("Register clicked")
     try {
         const {
             firstName,
@@ -42,6 +43,7 @@ export const register = async(req,res)=>{
 
 //LOG IN
 export const login =async (req,res)=>{
+    console.log("Login clicked")
     try {
 
         const {email,password} = req.body
