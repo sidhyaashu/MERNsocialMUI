@@ -20,6 +20,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 const persistConfig = {key:"root",storage,version:1}
 const persistedReducer = persistReducer(persistConfig,authReducer)
+
 const store = configureStore({
   reducer : persistedReducer,
   middleware:(getDefaultMiddleware)=>
@@ -32,12 +33,9 @@ const store = configureStore({
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistStore(store)} >
         <App />
       </PersistGate>
-    </Provider>
-    
-  </React.StrictMode>,
+    </Provider>,
 )

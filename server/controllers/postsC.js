@@ -36,7 +36,6 @@ export const getFeedPosts=async (req,res)=>{
     try {
         const post = await Post.find()
         res.status(200).json(post)
-        
     } catch (error) {
         res.status(409).json({message:"Something went wrong"}) 
     }

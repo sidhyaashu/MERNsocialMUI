@@ -7,8 +7,8 @@ const router = express.Router()
 
 
 //READ
-router.get('/',veryFyToken,getFeedPosts)
-router.get('/:userId/posts',getUserPosts)
+router.get('/',veryFyToken,getFeedPosts) //feed posts
+router.get('/:userId/posts',getUserPosts) // indivisual post
 
 //UPDATE
 router.patch('/:id/like',veryFyToken,likePost)
