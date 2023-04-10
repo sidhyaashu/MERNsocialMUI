@@ -35,10 +35,13 @@ const PostWidget = ({
     const dispatch = useDispatch()
     const token = useSelector((state)=>state.token)
     const loggedInUserId = useSelector((state)=>state.user._id)
+    console.log("loggedInUserId - ",loggedInUserId)
+
     const isLiked = Boolean(likes[loggedInUserId])
     const likeCount = Object.keys(likes).length
 
-    const {palette} = useTheme()
+
+    const { palette } = useTheme()
     const primary = palette.primary.main
     const main = palette.neutral.main
 
@@ -78,7 +81,7 @@ const PostWidget = ({
         {picturePath && (
           <img
           width="100%"
-          height="auto"
+          height="350px"
           alt="post"
           style={{
             borderRadius:".75rem",

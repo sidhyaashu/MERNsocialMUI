@@ -5,11 +5,18 @@ import { setPosts } from '../../state/index.js';
 
 
 
+
+
+
 const PostsWidget = ({userId,isProfile=false}) => {
 
     const dispatch = useDispatch()
     const posts = useSelector((state)=>state.posts)
     const token = useSelector((state)=>state.token)
+    
+
+    console.log("posts --> ",posts)
+
 
     const getPosts = async()=>{
         const response = await fetch("http://localhost:3001/posts",{
@@ -17,16 +24,19 @@ const PostsWidget = ({userId,isProfile=false}) => {
             headers:{
                 Authorization:`Bearer ${token}`
             }
-        });
+        })
+        
 
-        const data = response.json();
+        const data = await response.json();
 
         dispatch(
             setPosts({
                 posts:data
             })
         );
+
     };
+
 
     const getUserPosts = async()=>{
         const response = await fetch(`http://localhost:3001/posts/${userId}/posts`,{
@@ -36,14 +46,16 @@ const PostsWidget = ({userId,isProfile=false}) => {
             }
         });
 
-        const data = response.json();
+        const data =await response.json();
 
         dispatch(
             setPosts({
                 posts:data
             })
         );
+
     };
+
 
 
     useEffect(()=>{
@@ -83,39 +95,8 @@ const PostsWidget = ({userId,isProfile=false}) => {
             />
         )
     )}
-
     </>
   )
 }
 
 export default PostsWidget
-
-
-//original
-    /* {posts.map(
-        ({
-            _id,
-            userId,
-            firstName,
-            lastName,
-            location,
-            description,
-            picturePath,
-            userPicturePath,
-            likes,
-            comments
-        })=>(
-            <PostWidget
-                key={_id}
-                postId={_id}
-                postUserId={userId}
-                location={location}
-                name={`${firstName} ${lastName}`}
-                description={description}
-                picturePath={picturePath}
-                userPicturePath={userPicturePath}
-                likes={likes}
-                comments={comments}
-            />
-        )
-    )} */

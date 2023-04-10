@@ -5,6 +5,7 @@ import './index.css'
 import authReducer from './state/index.js'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+// import promiseMiddleware from "redux-promise";
 import {
   persistStore,
   persistReducer,
@@ -20,16 +21,21 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 const persistConfig = {key:"root",storage,version:1}
 const persistedReducer = persistReducer(persistConfig,authReducer)
-
+// serializableCheck: false
 const store = configureStore({
   reducer : persistedReducer,
+  
   middleware:(getDefaultMiddleware)=>
     getDefaultMiddleware({
-      serializableCheck:{
-        ignoreActions:[FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER]
-      }
+      serializableCheck:false
     })
 })
+
+
+// {
+//         ignoreActions:[FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER]
+//       }
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
